@@ -30,6 +30,3 @@
 ## Чеклист Проектной работы:
 
 - [Чеклист 10](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-10.pdf);
-
-## Ссыла на проектную работу**
-[Путешествия по Место](https://are-new-ta.github.io/mesto-react/ "красивое")

@@ -9,14 +9,12 @@ function PopupWithForm(props) {
           name={props.name}
           method="post"
           noValidate >
-
           {props.children}
-
           <button
             className="popup__button-save"
             type="submit"
             value={props.buttonText}>
-            Сохранить
+            {props.buttonText}
           </button>
         </form>
         <button
@@ -28,6 +26,6 @@ function PopupWithForm(props) {
       </div>
     </div>
   )
-
 }
+
 export default PopupWithForm;

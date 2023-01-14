@@ -1,13 +1,9 @@
 import React from 'react';
 import Card from "./Card";
 
-
 function Main({ onEditProfile, onEditAvatar, onAddPlace, onCardClick, userAvatar, userName, userDescription, cards }) {
-
   return (
-
     <main className="content root__main">
-
       {/* <!--Profile--> */}
       <section className="profile">
         <div className="profile__container">
@@ -43,6 +39,7 @@ function Main({ onEditProfile, onEditAvatar, onAddPlace, onCardClick, userAvatar
       {/* <!--cards --> */}
       <section className="cards" >
         {cards.map((card) => (
+
           <Card
             card={card}
             onCardClick={onCardClick}

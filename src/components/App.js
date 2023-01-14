@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
-import React from 'react';
+import React, { useEffect, useState } from "react";
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from "./PopupWithForm";
 import api from '../utils/api';
 import ImagePopup from "./ImagePopup";
-
 
 function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
@@ -16,27 +14,17 @@ function App() {
   const [cards, setCards] = useState([]);
   const [selectedCard, setSelectedCard] = useState({ bool: false, alt: '', src: '' });
 
+  //получаем данные пользователя и карточек
   useEffect(() => {
-    api.getUserProfile()
-      .then((data) => {
-        setUserDataProfile(data);
+    Promise.all([api.getUserProfile(), api.getInitialCards()])
+      .then(([userData, arrCards]) => {
+        setUserDataProfile(userData);
+        setCards(arrCards);
       })
       .catch((error) => {
         console.log(`Ошибка: ${error}`);
       });
   }, [])
-
-  //данные карточек
-  useEffect(() => {
-    api.getInitialCards()
-      .then((cards) => {
-        setCards(cards);
-      })
-      .catch((error) => {
-        console.log(`Ошибка: ${error}`);
-      });
-  }, [])
-
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
@@ -65,8 +53,6 @@ function App() {
   function handleCardClick(card) {
     setSelectedCard({ bool: true, alt: card.name, src: card.link });
   }
-
-
 
   return (
     <div className="App">
@@ -177,7 +163,6 @@ function App() {
         onClose={closeAllPopups}
       />
 
-
       {/* <!--popup delete-card--> */}
       <div className="popup popup_data_delete-card">
         <div className="popup__container popup__container_data_delete-card">
@@ -195,13 +180,8 @@ function App() {
           </form>
         </div>
       </div>
-
-
     </div >
   );
 }
 
 export default App;
-
-
-
