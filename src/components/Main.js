@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Card from "./Card";
 
-function Main({ onEditProfile, onEditAvatar, onAddPlace, onCardClick, userAvatar, userName, userDescription, cards }) {
+function Main({ onEditProfile, onEditAvatar, onAddPlace, onCardClick, onCardLike, onCardDelete, cards }) {
+
+  //подписываемся на контент CurrentUserContext
+  const currentUser = useContext(CurrentUserContext);
+
   return (
     <main className="content root__main">
       {/* <!--Profile--> */}
@@ -9,7 +14,7 @@ function Main({ onEditProfile, onEditAvatar, onAddPlace, onCardClick, userAvatar
         <div className="profile__container">
           <div className="profile__image-box">
             <img
-              src={userAvatar}
+              src={currentUser.avatar}
               alt="Аватар"
               className="profile__image"
               id="avatar"
@@ -17,7 +22,7 @@ function Main({ onEditProfile, onEditAvatar, onAddPlace, onCardClick, userAvatar
           </div>
           <div className="profile__info-box">
             <div className="profile__box-button">
-              <h1 className="profile__title">{userName}</h1>
+              <h1 className="profile__title">{currentUser.name}</h1>
               <button
                 className="profile__edit-button"
                 type="button"
@@ -25,7 +30,7 @@ function Main({ onEditProfile, onEditAvatar, onAddPlace, onCardClick, userAvatar
                 aria-label="Редактировать"
                 onClick={onEditProfile} />
             </div>
-            <p className="profile__subtitle">{userDescription}</p>
+            <p className="profile__subtitle">{currentUser.about}</p>
           </div>
         </div>
         <button
@@ -43,6 +48,8 @@ function Main({ onEditProfile, onEditAvatar, onAddPlace, onCardClick, userAvatar
           <Card
             card={card}
             onCardClick={onCardClick}
+            onCardLike={onCardLike}
+            onCardDelete={onCardDelete}
             key={card._id} />
         ))}
       </section>

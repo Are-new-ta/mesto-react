@@ -35,7 +35,8 @@ class Api {
   }
 
   //меняем данные пользователя
-  changeUserProfile(userName, userJob) {
+  // changeUserProfile(userName, userJob) изначальная версия, в аргументах не объект
+  changeUserProfile({ userName, userJob }) {
     return fetch(`${this._url}users/me`, {
       method: 'PATCH',
       headers: this._headers,
@@ -69,22 +70,39 @@ class Api {
       .then((res) => this._checkServerResponse(res));
   }
 
-  //снимаем лайк с карточки
-  deleteLikeCard(id) {
-    return fetch(`${this._url}cards/${id}/likes`, {
-      method: 'DELETE',
-      headers: this._headers
-    })
-      .then((res) => this._checkServerResponse(res));
-  }
+  // //снимаем лайк с карточки
+  // deleteLikeCard(id) {
+  //   return fetch(`${this._url}cards/${id}/likes`, {
+  //     method: 'DELETE',
+  //     headers: this._headers
+  //   })
+  //     .then((res) => this._checkServerResponse(res));
+  // }
 
-  //добавляем лайк карточке
-  addLikeCard(id) {
-    return fetch(`${this._url}cards/${id}/likes`, {
-      method: 'PUT',
-      headers: this._headers
-    })
-      .then((res) => this._checkServerResponse(res));
+  // //добавляем лайк карточке
+  // addLikeCard(id) {
+  //   return fetch(`${this._url}cards/${id}/likes`, {
+  //     method: 'PUT',
+  //     headers: this._headers
+  //   })
+  //     .then((res) => this._checkServerResponse(res));
+  // }
+
+  //меняем статус лайка на карточке
+  changeLikeCardStatus(cardId, isLiked) {
+    if (isLiked) {
+      return fetch(`${this._url}cards/${cardId}/likes`, {
+        method: 'PUT',
+        headers: this._headers
+      })
+        .then((res) => this._checkServerResponse(res));
+    } else {
+      return fetch(`${this._url}cards/${cardId}/likes`, {
+        method: 'DELETE',
+        headers: this._headers
+      })
+        .then((res) => this._checkServerResponse(res));
+    }
   }
 
   _checkServerResponse(res) {
