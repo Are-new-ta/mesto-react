@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Card from "./Card";
 
-function Main({ onEditProfile, onEditAvatar, onAddPlace, onCardClick, onCardLike, onCardDelete, cards }) {
+function Main({ onEditProfile, onEditAvatar, onAddPlace, onCardClick, onCardLike, onCardDelete, setCardId, cards, onConfurmationDeleteCardPopup }) {
 
   //подписываемся на контент CurrentUserContext
   const currentUser = useContext(CurrentUserContext);
@@ -46,11 +46,14 @@ function Main({ onEditProfile, onEditAvatar, onAddPlace, onCardClick, onCardLike
         {cards.map((card) => (
 
           <Card
+            key={card._id}
             card={card}
             onCardClick={onCardClick}
             onCardLike={onCardLike}
             onCardDelete={onCardDelete}
-            key={card._id} />
+            onConfurmationDeleteCardPopup={onConfurmationDeleteCardPopup}
+            setCardId={setCardId} //?
+          />
         ))}
       </section>
     </main>

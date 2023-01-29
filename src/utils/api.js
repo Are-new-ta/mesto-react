@@ -23,7 +23,8 @@ class Api {
   }
 
   //меняем аватарку
-  changeAvatar(avatarLink) {
+  // changeAvatar(avatarLink)изначальная версия, в аргументах не объект, а строка
+  changeAvatar({ avatarLink }) {
     return fetch(`${this._url}users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
@@ -35,7 +36,7 @@ class Api {
   }
 
   //меняем данные пользователя
-  // changeUserProfile(userName, userJob) изначальная версия, в аргументах не объект
+  // changeUserProfile(userName, userJob) изначальная версия, в аргументах не объект, а строка
   changeUserProfile({ userName, userJob }) {
     return fetch(`${this._url}users/me`, {
       method: 'PATCH',
@@ -49,7 +50,8 @@ class Api {
   }
 
   //добавляем карточку
-  addNewCard(popupNameCard, popupLink) {
+  // addNewCard(popupNameCard, popupLink) изначальная версия, в аргументах не объект, а строка
+  addNewCard({ popupNameCard, popupLink }) {
     return fetch(`${this._url}cards`, {
       method: 'POST',
       headers: this._headers,
@@ -69,24 +71,6 @@ class Api {
     })
       .then((res) => this._checkServerResponse(res));
   }
-
-  // //снимаем лайк с карточки
-  // deleteLikeCard(id) {
-  //   return fetch(`${this._url}cards/${id}/likes`, {
-  //     method: 'DELETE',
-  //     headers: this._headers
-  //   })
-  //     .then((res) => this._checkServerResponse(res));
-  // }
-
-  // //добавляем лайк карточке
-  // addLikeCard(id) {
-  //   return fetch(`${this._url}cards/${id}/likes`, {
-  //     method: 'PUT',
-  //     headers: this._headers
-  //   })
-  //     .then((res) => this._checkServerResponse(res));
-  // }
 
   //меняем статус лайка на карточке
   changeLikeCardStatus(cardId, isLiked) {

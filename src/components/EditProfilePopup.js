@@ -7,7 +7,10 @@ import { useFormAndValidation } from "../utils/useFormAndValidation";
 function EditProfilePopup({ isOpen, onClose, buttonText, onUpdateUser }) {
 
   const currentUser = useContext(CurrentUserContext);
-  const { values, error, isValid, setValues, handleChange, resetForm } = useFormAndValidation({ userName: '', userDescription: '' });
+  const { values, error, isValid, setValues, handleChange, resetForm } = useFormAndValidation({
+    userName: currentUser.name || '',
+    userDescription: currentUser.about || ''
+  });
 
   useEffect(() => {
     setValues({
@@ -72,3 +75,5 @@ function EditProfilePopup({ isOpen, onClose, buttonText, onUpdateUser }) {
 export default EditProfilePopup;
 
 
+  // const { values, error, isValid, setValues, handleChange, resetForm } = useFormAndValidation({ userName: '', userDescription: '' });
+  // const { values, error, isValid, setValues, handleChange, resetForm } = useFormAndValidation();

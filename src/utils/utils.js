@@ -1,8 +1,8 @@
-function renderLoading(isLoading) {
+function renderLoading(isLoading, button, buttonText) {
   if (isLoading) {
-    this._buttonSubmit.textContent = 'Сохранение...';
+    button.textContent = 'Сохранение...';
   } else {
-    this._buttonSubmit.textContent = this._buttonSubmitValue;
+    button.textContent = buttonText;
   }
 }
 

@@ -10,8 +10,6 @@ export function useFormAndValidation() {
   // Обработчик изменения инпута обновляет стейт
   function handleChange(e) {
     const { name, value } = e.target;
-    console.log('name', name);
-    console.log('value', value);
     setValues({ ...values, [name]: value });
     setError({ ...error, [name]: e.target.validationMessage });
     setIsValid(e.target.closest('form').checkValidity());
