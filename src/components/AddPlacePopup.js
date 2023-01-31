@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { useFormAndValidation } from "../utils/useFormAndValidation";
 
-function AddPlacePopup({ isOpen, onClose, buttonText, onAddPlace }) {
+function AddPlacePopup({ isOpen, onClose, isLoading, onAddPlace }) {
 
   const { values, error, isValid, setValues, handleChange, resetForm } = useFormAndValidation()
 
@@ -12,7 +12,6 @@ function AddPlacePopup({ isOpen, onClose, buttonText, onAddPlace }) {
       inputCardLink: ''
     });
   }, []);
-
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -34,7 +33,7 @@ function AddPlacePopup({ isOpen, onClose, buttonText, onAddPlace }) {
       title="Новое место"
       name="card"
       isOpen={isOpen ? 'popup_opened' : ''}
-      buttonText={buttonText ? 'Сохранение...' : 'Создать'}
+      buttonText={isLoading ? 'Сохранение...' : 'Создать'}
       onSubmit={handleSubmit}
       onClose={closePopupAndResetForm}>
       <>

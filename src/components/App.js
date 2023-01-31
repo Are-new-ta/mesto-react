@@ -16,7 +16,7 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isConfirmationDeleteCardPopup, setConfirmationDeleteCardPopup] = useState(false);
   const [cards, setCards] = useState([]);
-  const [cardId, setCardId] = useState('');
+  const [deletedCard, setDeletedCard] = useState('');
   const [selectedCard, setSelectedCard] = useState({ bool: false, alt: '', src: '' });
   const [currentUser, setCurrentUser] = useState('');
   const [renderLoading, setRenderLoading] = useState(false)
@@ -25,7 +25,7 @@ function App() {
   useEffect(() => {
     Promise.all([api.getUserProfile(), api.getInitialCards()])
       .then(([userData, arrCards]) => {
-        setCurrentUser(userData);//заменила на setCurrentUser
+        setCurrentUser(userData);
         setCards(arrCards);
       })
       .catch((error) => {
@@ -45,9 +45,10 @@ function App() {
     setIsAddPlacePopupOpen(!isAddPlacePopupOpen);
   }
 
-  //popup подтверждения удаления карточки
-  function handeleConfurmationDeleteCardPopup() {
+  //popup подтверждения удаления карточки и запоминаем карточку которую нужно удалять
+  function handeleConfurmationDeleteCardPopup(card) {
     setConfirmationDeleteCardPopup(!isConfirmationDeleteCardPopup);
+    setDeletedCard(card)
   }
 
   function closeAllPopups() {
@@ -60,6 +61,10 @@ function App() {
 
   function handleCardClick(card) {
     setSelectedCard({ bool: true, alt: card.name, src: card.link });
+  }
+
+  function handleConfirmationDeletePopup() {
+    handleCardDelete(deletedCard)
   }
 
   //добавляем лайки/дизлайки
@@ -96,7 +101,7 @@ function App() {
   //обновляем данные юзера
   function handleUpdateUser({ name, about }) {
     setRenderLoading(true);
-    api.changeUserProfile({ newUserName: name, newUserJob: about })
+    api.changeUserProfile({ name, about })
       .then((userData) => {
         setCurrentUser(userData);
       })
@@ -112,9 +117,9 @@ function App() {
   }
 
   //обновляем аватарку юзера
-  function handleUpdateUserAvatar({ avatarLink }) {
+  function handleUpdateUserAvatar({ avatar }) {
     setRenderLoading(true);
-    api.changeAvatar({ newAvatar: avatarLink })
+    api.changeAvatar({ avatar })
       .then((userData) => {
         setCurrentUser(userData);
       })
@@ -132,7 +137,7 @@ function App() {
   //добавляем новую карточку
   function handleAddPlace({ name, link }) {
     setRenderLoading(true);
-    api.addNewCard({ name: name, link: link })
+    api.addNewCard({ name, link })
       .then((newCard) => {
         setCards([newCard, ...cards]);
       })
@@ -161,7 +166,6 @@ function App() {
           onEditAvatar={handleEditAvatarClick}
           onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
-          setCardId={setCardId} //?
           onClose={closeAllPopups} />
 
         <Footer />
@@ -170,26 +174,26 @@ function App() {
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
-          buttonText={renderLoading} />
+          isLoading={renderLoading} />
 
         <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-          buttonText={renderLoading}
+          isLoading={renderLoading}
           onUpdateUser={handleUpdateUserAvatar} />
 
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-          buttonText={renderLoading}
+          isLoading={renderLoading}
           onAddPlace={handleAddPlace}
         />
 
         <ConfirmationDeleteCardPopup
           isOpen={isConfirmationDeleteCardPopup}
           onClose={closeAllPopups}
-          buttonText={renderLoading}
-          cardId={cardId}
+          isLoading={renderLoading}
+          onCardDelete={handleConfirmationDeletePopup}
         />
 
         <ImagePopup

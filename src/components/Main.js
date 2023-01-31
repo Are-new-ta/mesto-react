@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import Card from "./Card";
 
-function Main({ onEditProfile, onEditAvatar, onAddPlace, onCardClick, onCardLike, onCardDelete, setCardId, cards, onConfurmationDeleteCardPopup }) {
+function Main({ onEditProfile, onEditAvatar, onAddPlace, onCardClick, onCardLike, onCardDelete, cards, onConfurmationDeleteCardPopup }) {
 
   //подписываемся на контент CurrentUserContext
   const currentUser = useContext(CurrentUserContext);
@@ -52,7 +52,6 @@ function Main({ onEditProfile, onEditAvatar, onAddPlace, onCardClick, onCardLike
             onCardLike={onCardLike}
             onCardDelete={onCardDelete}
             onConfurmationDeleteCardPopup={onConfurmationDeleteCardPopup}
-            setCardId={setCardId} //?
           />
         ))}
       </section>

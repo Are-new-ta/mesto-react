@@ -24,12 +24,12 @@ class Api {
 
   //меняем аватарку
   // changeAvatar(avatarLink)изначальная версия, в аргументах не объект, а строка
-  changeAvatar({ avatarLink }) {
+  changeAvatar({ avatar }) {
     return fetch(`${this._url}users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        avatar: `${avatarLink}`,
+        avatar: `${avatar}`,
       })
     })
       .then((res) => this._checkServerResponse(res));
@@ -37,27 +37,26 @@ class Api {
 
   //меняем данные пользователя
   // changeUserProfile(userName, userJob) изначальная версия, в аргументах не объект, а строка
-  changeUserProfile({ userName, userJob }) {
+  changeUserProfile({ name, about }) {
     return fetch(`${this._url}users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
-        name: `${userName}`,
-        about: `${userJob}`
+        name: `${name}`,
+        about: `${about}`
       })
     })
       .then((res) => this._checkServerResponse(res));
   }
 
   //добавляем карточку
-  // addNewCard(popupNameCard, popupLink) изначальная версия, в аргументах не объект, а строка
-  addNewCard({ popupNameCard, popupLink }) {
+  addNewCard({ name, link }) {
     return fetch(`${this._url}cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
-        name: `${popupNameCard}`,
-        link: `${popupLink}`
+        name: `${name}`,
+        link: `${link}`
       })
     })
       .then((res) => this._checkServerResponse(res));

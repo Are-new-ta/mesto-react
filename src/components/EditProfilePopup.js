@@ -4,26 +4,23 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { useFormAndValidation } from "../utils/useFormAndValidation";
 
 
-function EditProfilePopup({ isOpen, onClose, buttonText, onUpdateUser }) {
+function EditProfilePopup({ isOpen, onClose, isLoading, onUpdateUser }) {
 
   const currentUser = useContext(CurrentUserContext);
-  const { values, error, isValid, setValues, handleChange, resetForm } = useFormAndValidation({
-    userName: currentUser.name || '',
-    userDescription: currentUser.about || ''
-  });
+  const { values, error, isValid, setValues, handleChange, resetForm } = useFormAndValidation()
 
   useEffect(() => {
     setValues({
-      userName: currentUser.name || '',
-      userDescription: currentUser.about || ''
+      name: currentUser.name || '',
+      about: currentUser.about || ''
     });
   }, [currentUser, isOpen]);
 
   function handleSubmit(e) {
     e.preventDefault();
     onUpdateUser({
-      name: values.userName,
-      about: values.userDescription
+      name: values.name,
+      about: values.about
     })
   }
 
@@ -37,36 +34,34 @@ function EditProfilePopup({ isOpen, onClose, buttonText, onUpdateUser }) {
       title="Редактировать профиль"
       name="profile"
       isOpen={isOpen ? 'popup_opened' : ''}
-      buttonText={buttonText ? 'Сохранение...' : 'Сохранить'}
+      buttonText={isLoading ? 'Сохранение...' : 'Сохранить'}
       onSubmit={handleSubmit}
       onClose={closePopupAndResetForm}>
       <>
         <input
           type="text"
-          // name="popupProfileName"
-          name="userName"
+          name="name"
           id="popup__error_data_name"
           className="popup__input popup__input_data_name"
           minLength='2'
           maxLength='40'
           placeholder="Имя"
           required
-          value={values.userName || ''}
+          value={values.name || ' '}
           onChange={handleChange} />
-        <span className={`popup__error  ${!isValid ? 'popup__error_data_name-error' : ''} `} >{error.userName}</span>
+        <span className={`popup__error  ${!isValid ? 'popup__error_data_name-error' : ''} `} >{error.name}</span>
         <input
           type="text"
-          // name="popupJob"
-          name="userDescription"
+          name="about"
           id="popup__error_data_job"
           placeholder="О себе"
           className="popup__input popup__input_data_job"
           minLength='2'
           maxLength='200'
           required
-          value={values.userDescription || ''}
+          value={values.about || ' '}
           onChange={handleChange} />
-        <span className={` popup__error ${!isValid ? 'popup__error_data_job-error' : ''} `} >{error.userDescription}</span>
+        <span className={` popup__error ${!isValid ? 'popup__error_data_job-error' : ''} `} >{error.about}</span>
       </>
     </PopupWithForm>
   )
