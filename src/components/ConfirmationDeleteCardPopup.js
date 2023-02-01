@@ -14,8 +14,7 @@ function ConfirmationDeleteCardPopup({ isOpen, onClose, isLoading, onCardDelete 
       isOpen={isOpen ? 'popup_opened' : ''}
       buttonText={isLoading ? 'Сохранение...' : 'Да'}
       onSubmit={handleSubmit}
-      onClose={onClose}>
-    </PopupWithForm>
+      onClose={onClose} />
   )
 }
 

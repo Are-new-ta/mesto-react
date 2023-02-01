@@ -37,38 +37,32 @@ function EditProfilePopup({ isOpen, onClose, isLoading, onUpdateUser }) {
       buttonText={isLoading ? 'Сохранение...' : 'Сохранить'}
       onSubmit={handleSubmit}
       onClose={closePopupAndResetForm}>
-      <>
-        <input
-          type="text"
-          name="name"
-          id="popup__error_data_name"
-          className="popup__input popup__input_data_name"
-          minLength='2'
-          maxLength='40'
-          placeholder="Имя"
-          required
-          value={values.name || ' '}
-          onChange={handleChange} />
-        <span className={`popup__error  ${!isValid ? 'popup__error_data_name-error' : ''} `} >{error.name}</span>
-        <input
-          type="text"
-          name="about"
-          id="popup__error_data_job"
-          placeholder="О себе"
-          className="popup__input popup__input_data_job"
-          minLength='2'
-          maxLength='200'
-          required
-          value={values.about || ' '}
-          onChange={handleChange} />
-        <span className={` popup__error ${!isValid ? 'popup__error_data_job-error' : ''} `} >{error.about}</span>
-      </>
+      <input
+        type="text"
+        name="name"
+        id="popup__error_data_name"
+        className="popup__input popup__input_data_name"
+        minLength='2'
+        maxLength='40'
+        placeholder="Имя"
+        required
+        value={values.name || ' '}
+        onChange={handleChange} />
+      <span className={`popup__error  ${!isValid ? 'popup__error_data_name-error' : ''} `} >{error.name}</span>
+      <input
+        type="text"
+        name="about"
+        id="popup__error_data_job"
+        placeholder="О себе"
+        className="popup__input popup__input_data_job"
+        minLength='2'
+        maxLength='200'
+        required
+        value={values.about || ' '}
+        onChange={handleChange} />
+      <span className={` popup__error ${!isValid ? 'popup__error_data_job-error' : ''} `} >{error.about}</span>
     </PopupWithForm>
   )
 }
 
 export default EditProfilePopup;
-
-
-  // const { values, error, isValid, setValues, handleChange, resetForm } = useFormAndValidation({ userName: '', userDescription: '' });
-  // const { values, error, isValid, setValues, handleChange, resetForm } = useFormAndValidation();

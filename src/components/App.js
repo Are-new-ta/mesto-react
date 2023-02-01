@@ -16,9 +16,9 @@ function App() {
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isConfirmationDeleteCardPopup, setConfirmationDeleteCardPopup] = useState(false);
   const [cards, setCards] = useState([]);
-  const [deletedCard, setDeletedCard] = useState('');
+  const [deletedCard, setDeletedCard] = useState({ name: '', link: '' });
   const [selectedCard, setSelectedCard] = useState({ bool: false, alt: '', src: '' });
-  const [currentUser, setCurrentUser] = useState('');
+  const [currentUser, setCurrentUser] = useState({});
   const [renderLoading, setRenderLoading] = useState(false)
 
   //получаем данные пользователя и карточек
@@ -151,6 +151,30 @@ function App() {
         setRenderLoading(false);
       })
   }
+
+  //логика закрывания любого попапа с помощью нажатия клавиши Esc
+  //Создаем переменную isOpen снаружи useEffect, в которой следим за всеми состояниями попапов. 
+  //Если хоть одно состояние true или не null, то какой-то попап открыт, значит, навешивать нужно обработчик.
+  //Объявляем функцию внутри useEffect, чтобы она не теряла свою ссылку при обновлении компонента.
+  //И не забываем удалять обработчик в clean up функции через return
+  //А также массив зависимостей c isOpen, чтобы отслеживать изменение этого показателя открытости. 
+  //Как только он становится true, то навешивается обработчик, когда в false, тогда удаляется обработчик.*}
+
+  const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard.bool
+
+  useEffect(() => {
+    function closeByEscape(evt) {
+      if (evt.key === 'Escape') {
+        closeAllPopups();
+      }
+    }
+    if (isOpen) { // навешиваем только при открытии
+      document.addEventListener('keydown', closeByEscape);
+      return () => {
+        document.removeEventListener('keydown', closeByEscape);
+      }
+    }
+  }, [isOpen])
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
