@@ -56,3 +56,5 @@ function Card({ card, onCardClick, onCardLike, onConfurmationDeleteCardPopup }) 
 }
 
 export default Card;
+
+// @babel/plugin-syntax-class-properties
