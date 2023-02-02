@@ -21,7 +21,6 @@ function EditAvatarPopup({ isOpen, onClose, isLoading, onUpdateUser }) {
   function closePopupAndResetForm() {
     onClose();
     resetForm();
-    values.avatar.value = '';
   }
 
   return (
